@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+	 <link rel="preconnect" href="https://fonts.googleapis.com">
+	 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+	 <link rel="preconnect" href="https://fonts.googleapis.com">
+	 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ 	 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Zilla+Slab:ital,wght@1,500&display=swap" 		rel="stylesheet">
+	 <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel='stylesheet'   />
+	 <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	 <link rel="stylesheet" href="/stylesheets/app.css">
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+		<div class="container">
+  			<a class="navbar-brand top" href="/">CRMT</a>
+ 			 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-				controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    			<span class="navbar-toggler-icon"></span>
+  			 </button>
+
+  			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav">
+					<li class="nav-item <%= typeof page !== 'undefined' && page === 'campgrounds' ? 'active' : '' %>">
+        				<a class="nav-link" href="/helpcamps">Home</a>
+      				</li>
+				</ul>
+    			<ul class="navbar-nav ml-auto">
+					<% if(!currentUser) { %>
+      					<li class="nav-item <%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>">
+        				<a class="nav-link" href="/register">SignUp</a>
+      					</li>
+      					<li class="nav-item" <%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>>
+        					<a class="nav-link"  href="/login">LogIn</a>
+      					</li>
+					<% } else { %>
+					<li class="nav-item">
+        				<a class="nav-link" href="#">Signed In as <%= currentUser.username.toUpperCase()%></a>
+      				</li>
+					<li class="nav-item">
+        				<a class="nav-link" href="/logout">LogOut</a>
+      				</li>
+					<% } %>
+    			</ul>
+  			</div>
+		</div>
+	</nav>
+	
+	<div class="container">
+		<%if(error && error.length>0) { %>
+			<div class="alert alert-danger" role="alert">
+  				<%=error%>
+			</div>
+		<%}%>
+		<%if(success && success.length>0){%>
+			<div class="alert alert-success" role="alert">
+  				<%=success%>
+			</div>
+		<%}%>
+	</div>
+	<div class="container login-font">
+		<div class="row justify-content-center py-5">
+			<div class="col-lg-6 d-none d-lg-block px-0 mx-0">
+				<img class="login-img img-fluid" src="https://res.cloudinary.com/vishant1103/image/upload/v1633652802/Untitled_design_2_jxrfkp.png">                			
+			</div>
+			<div class="col-lg-6 col-xs-12 text-center px-5">
+				<h1 class="formheading">
+					Welcome to CRFT
+				</h1>
+				<br><br>
+				<h1>
+					Sign Up
+				</h1>
+				<br>
+				<form action="/register" autocomplete="off" method="POST">
+					<div class="form-group">
+						<label for="username">ENTER USERNAME:</label>
+						<input class ="form-control" type="text" required placeholder="Username" name="username">
+					</div>
+					 <div class="form-group">
+						 <label for="password">CHOOSE PASSWORD:</label>
+						<input class ="form-control" type="password" required placeholder="Password" name="password">
+					</div>
+					<div class="form-group">
+						<label for="firstname">ENTER FIRSTNAME:</label>
+						<input class ="form-control" type="text" required placeholder="Firstname" name="firstname">
+					</div>
+					<div class="form-group">
+						<label for="lastname">ENTER LASTNAME:</label>
+						<input class ="form-control" type="text" placeholder="Lastname" name="lastname">
+					</div>
+					<div class="form-group">
+						<label for="email">ENTER EMAIL:</label>
+						<input class ="form-control" type="email" required placeholder="Email" name="email">
+					</div>
+					<div class="form-group row justify-content-center">
+						<button class="btn btn-dark btn-lg"> Sign Up </button>
+					</div>
+					<a href="/helpcamps">Go Back</a>
+				</form>
+			</div>
+		</div>
+
+	
+<%- include("partials/footer") %>
+

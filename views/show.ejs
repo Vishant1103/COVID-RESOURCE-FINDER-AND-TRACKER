@@ -1,0 +1,112 @@
+<%- include("partials/header") %>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel='stylesheet' />
+
+
+<div class="row">
+		<div class="col-md-4 text-center mb-4 order-2 order-md-1">
+			<div class="list-group">
+					 <li class="list-group-item bg-dark nav-item dropright">
+       				 	<a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        					CONTACT US
+					  	</a>
+       		  			<div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+	    				<a class="dropdown-item text-primary text-center" href="#">E-MAIL</a>
+         		  		<a class="dropdown-item text-primary text-center" href="#">Phone</a>
+					 	</div>
+     				 </li>
+					<a class="list-group-item bg-dark" href = "https://crft-covid-tracker.herokuapp.com">
+						COVID-19 DASHBOARD
+					</a>
+				    <a class="list-group-item bg-dark" href = "/helpcamps/new">
+						LIST YOUR ORGANISATION
+					</a>
+					<li class="list-group-item bg-dark">
+						DONATE
+					</li>
+			</div>
+			<div class="list-group justify-content-center">
+				<div id='map' class="mt-4 d-none d-xl-block" style='width: 350px; height: 500px;'></div>
+			</div>
+		</div>
+	
+		<div class="col-md-8 order-1 order-md-2">
+			<div class="blog maini">
+				<img class="img-fluid" src="<%= reqHelpcamp.image %>">
+				<div class="caption-full seci">
+					<h4>
+						<%= reqHelpcamp.name %>
+					</h4>
+					<p>
+ 						 <em>ADMIN: 
+							  <%=reqHelpcamp.author.name %>,
+							 <%= moment(reqHelpcamp.createdAt).fromNow() %>
+						</em>
+					</p>
+					<div>
+	 					<%=reqHelpcamp.description%>
+						<% if(currentUser && reqHelpcamp.author.id.equals(currentUser._id)){ %>
+						<div class="indexa">	
+							<a class="btn btn-sm btn-success" href="/helpcamps/<%= reqHelpcamp._id%>/edit">
+								EDIT
+							</a>
+							<form class="delete-form" action="/helpcamps/<%= reqHelpcamp._id%>?_method=DELETE" method="POST">
+								<button class="btn btn-sm btn-success">
+									DELETE
+								</button>
+							</form>
+						</div>
+						 <%}%> 
+					</div>
+				</div>
+			</div>
+			<br>
+		</div>
+</div>
+
+<div class="cbox">
+		<div class="text-center">
+			<h3>
+				<a class="querylink btn btn-md btn-success" href="/helpcamps/<%=reqHelpcamp._id%>/queries/new">Post Review</a>
+			</h3>
+		</div>
+			<br>
+        	<%reqHelpcamp.queries.forEach(function(query) { %>
+				<div class="row mb-3 mx-auto query">
+					<div class="col-md-12">
+						<strong><%= query.author.name%></strong>, 
+						<span class="time"><%= moment(query.createdAt).fromNow() %></span>
+						<div>
+							| <%= query.text%>
+							<div>
+								<% if(currentUser && query.author.id.equals(currentUser._id)){ %>
+								<a class="delete-form btn btn-sm btn-success" href="/helpcamps/<%=reqHelpcamp._id%>/queries/<%= query._id%>/edit">EDIT</a>
+								<form class="delete-form" action="/helpcamps/<%=reqHelpcamp._id%>/queries/<%=query._id%>?_method=DELETE" method="POST">
+									<button  class="btn btn-sm btn-success">
+												DELETE
+									</button>
+								</form>
+								<%}%>
+							</div>
+						</div>	
+					</div>
+				</div>
+			<% }); %>
+</div>
+<br>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoidmlzaGFudDExMDMiLCJhIjoiY2tiZjdzMzA5MHN3bTJ0cDhlc2s0ZmF4ZiJ9.rHU2MpodaaTlJlM23mselA';
+var map = new mapboxgl.Map({
+	container: 'map',
+	style: 'mapbox://styles/vishant1103/ckksl0xea151z17qdcysih9l4', 
+	center: [<%=reqHelpcamp.lng%>, <%=reqHelpcamp.lat%>], 
+	zoom: 10
+});
+	
+var marker = new mapboxgl.Marker()
+  .setLngLat([<%=reqHelpcamp.lng%>, <%= reqHelpcamp.lat%>])
+  .addTo(map);
+</script>
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
+
+<%- include("partials/footer") %>
