@@ -20,7 +20,7 @@ var helpcampRoutes= require("./routes/campgrounds")
 var indexRoutes= require("./routes/index")
 
 
-mongoose.connect('mongodb://id:password@cluster0-shard-00-00.f3pbn.mongodb.net:27017,cluster0-shard-00-01.f3pbn.mongodb.net:27017,cluster0-shard-00-02.f3pbn.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-128n6s-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true , useFindAndModify: false});
+mongoose.connect('mongodb://Vishant1103:Vishant6#@cluster0-shard-00-00.f3pbn.mongodb.net:27017,cluster0-shard-00-01.f3pbn.mongodb.net:27017,cluster0-shard-00-02.f3pbn.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-128n6s-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true , useFindAndModify: false});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine","ejs");
 app.use(express.static(__dirname + "/public"));
