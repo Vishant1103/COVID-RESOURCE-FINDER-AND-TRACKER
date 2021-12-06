@@ -73,8 +73,7 @@
         	<%reqHelpcamp.queries.forEach(function(query) { %>
 				<div class="row mb-3 mx-auto query">
 					<div class="col-md-12">
-						<strong><%= query.author.name%></strong>, 
-						<span class="time"><%= moment(query.createdAt).fromNow() %></span>
+						<strong><%= query.author.name%></strong>
 						<div>
 							| <%= query.text%>
 							<div>
